@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Benefits Finder</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, "Times New Roman", serif; color: #1a1a1a; background: #ffffff; }
+  *:focus { outline: none; }
+  header { background: #1f4e8c; color: #ffffff; padding: 18px 24px; }
+  header .brand { font-size: 22px; font-weight: bold; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 28px; margin: 8px 0 12px; }
+  p { font-size: 17px; line-height: 1.5; }
+  .fine { font-size: 11px; color: #a0a0a0; line-height: 1.3; }
+  .btn { display: inline-block; background: #1f4e8c; color: #ffffff; border: 0; border-radius: 6px; font-size: 18px; padding: 14px 22px; cursor: pointer; }
+  .iconbtn { background: #1f4e8c; border: 0; border-radius: 6px; width: 44px; height: 44px; cursor: pointer; padding: 10px; }
+  .row { margin: 14px 0; }
+  .row input[type=text] { font-size: 17px; padding: 10px; width: 280px; border: 2px solid #cccccc; border-radius: 4px; }
+  .row input::placeholder { color: #b5b5b5; }
+  .opts span { font-size: 15px; margin: 0 14px 0 4px; }
+  input[type=radio], input[type=checkbox] { width: 12px; height: 12px; margin: 0; }
+  .card { border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+  .card h2 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 4px 0; }
+  .link { color: #1f4e8c; text-decoration: underline; cursor: pointer; font-size: 16px; }
+  .banner { background: #f4f6f8; border-left: 4px solid #1f4e8c; padding: 10px 14px; font-size: 16px; }
+  .hide { display: none; }
+  #help { position: fixed; right: 24px; bottom: 24px; width: 320px; background: #ffffff; border: 1px solid #8c959f; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.25); padding: 16px; }
+  #help .x { position: absolute; top: 8px; right: 10px; width: 14px; height: 14px; font-size: 14px; line-height: 14px; color: #555555; cursor: pointer; text-align: center; }
+  #help p { font-size: 15px; margin: 4px 0 10px; }
+  #help input { font-size: 15px; padding: 8px; width: 100%; border: 1px solid #8c959f; border-radius: 4px; }
+  #help button { margin-top: 8px; font-size: 15px; padding: 8px 14px; background: #1f4e8c; color: #ffffff; border: 0; border-radius: 4px; }
+  footer { max-width: 760px; margin: 30px auto; padding: 0 24px 24px; }
+  .foot { font-size: 16px; color: #333333; line-height: 1.5; }
+  .ref { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<header><div class="brand">Community Benefits Finder</div></header>
+<main>
+  <div id="ended" class="banner hide">Your session has ended. Please start again.</div>
+
+  <section id="s-home">
+    <h1>Find help you may be able to get</h1>
+    <p>Answer a few questions and we will show programs in your area that can help with bills, prescriptions and property taxes.</p>
+    <p><button class="btn" type="button" id="go-check">Check what you can get</button></p>
+    <p class="fine">Prefer to talk to someone? Call 1-800-555-0142, Monday to Friday, 9am to 5pm. Calls are free.</p>
+  </section>
+
+  <section id="s-check" class="hide">
+    <h1>About you</h1>
+    <p>We use this only to show programs. Nothing is saved.</p>
+    <div class="row"><input type="text" id="f-age" placeholder="Your age"></div>
+    <div class="row"><input type="text" id="f-zip" placeholder="ZIP code"></div>
+    <div class="row"><input type="text" id="f-income" placeholder="Monthly household income ($)"></div>
+    <div class="row opts">
+      <div style="font-size:16px;margin-bottom:6px;">People in your household</div>
+      <input type="radio" name="hh" value="1"><span>1</span>
+      <input type="radio" name="hh" value="2"><span>2</span>
+      <input type="radio" name="hh" value="3"><span>3</span>
+      <input type="radio" name="hh" value="4"><span>4 or more</span>
+    </div>
+    <div class="row">
+      <button class="iconbtn" type="button" id="go-results"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><circle cx="10" cy="10" r="7"/><line x1="15.5" y1="15.5" x2="22" y2="22"/></svg></button>
+    </div>
+    <p><span class="link" id="back-home">Back</span></p>
+  </section>
+
+  <section id="s-results" class="hide">
+    <h1>Programs you may qualify for</h1>
+    <div class="card">
+      <h2>Utility Help</h2>
+      <p>Money toward heating and electric bills, paid straight to your utility company.</p>
+      <p class="fine">Household income must be under $2,430 a month for one person or $3,280 a month for two people. Apply by December 15.</p>
+      <p><button class="btn" type="button" id="go-apply">Request a call back</button></p>
+    </div>
+    <div class="card">
+      <h2>Prescription Savings Card</h2>
+      <p>A free card that lowers the price of many medicines at most pharmacies.</p>
+    </div>
+    <div class="card">
+      <h2>Property Tax Relief</h2>
+      <p>A reduction on your property tax bill if you own and live in your home.</p>
+    </div>
+    <p><span class="link" id="back-check">Change my answers</span></p>
+  </section>
+
+  <section id="s-apply" class="hide">
+    <h1>Request a call back</h1>
+    <p>A benefits adviser will call you about Utility Help within two working days.</p>
+    <div class="row"><label for="f-name" style="font-size:16px;display:block;">Full name</label><input type="text" id="f-name" autocomplete="name"></div>
+    <div class="row"><label for="f-phone" style="font-size:16px;display:block;">Phone number</label><input type="text" id="f-phone" autocomplete="tel"></div>
+    <div class="row"><label for="f-time" style="font-size:16px;display:block;">Best time to call</label><input type="text" id="f-time"></div>
+    <div class="row opts"><input type="checkbox" id="f-ok"><span>I agree to be contacted about this request</span></div>
+    <p><button class="btn" type="button" id="go-send">Send request</button></p>
+  </section>
+
+  <section id="s-done" class="hide">
+    <h1>Request received</h1>
+    <p>Thank you. An adviser will call you within two working days.</p>
+    <p>Your reference number is</p>
+    <p class="ref">CBF-7Q4K-2291</p>
+    <p><span class="link" id="back-start">Return to the start</span></p>
+  </section>
+</main>
+
+<div id="help" class="hide" role="dialog">
+  <div class="x" id="help-x">&times;</div>
+  <p><strong>Need help?</strong></p>
+  <p>Ask us anything about these programs.</p>
+  <input type="text" id="help-q" placeholder="Type your question">
+  <button type="button" id="help-send">Send</button>
+</div>
+
+<footer><p class="foot">Community Benefits Finder is a free information service. Program rules change; check with each program before you apply.</p></footer>
+
+<script>
+(function () {
+  var screens = ['home', 'check', 'results', 'apply', 'done'];
+  var helpShown = false;
+  var idleTimer = null;
+  function el(id) { return document.getElementById(id); }
+  function show(name) {
+    screens.forEach(function (s) { el('s-' + s).classList.toggle('hide', s !== name); });
+    if (name !== 'home') { el('ended').classList.add('hide'); }
+    if (name === 'results' && !helpShown) {
+      helpShown = true;
+      setTimeout(openHelp, 2000);
+    }
+    if (name !== 'apply' && idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+    window.scrollTo(0, 0);
+  }
+  function route() {
+    var h = (location.hash || '#/').replace('#/', '');
+    if (screens.indexOf(h) < 0) { h = 'home'; }
+    show(h);
+  }
+  function go(name) { location.hash = '#/' + (name === 'home' ? '' : name); }
+
+  function openHelp() {
+    el('help').classList.remove('hide');
+    el('help-q').focus();
+  }
+  function closeHelp() { el('help').classList.add('hide'); }
+  el('help-x').addEventListener('click', closeHelp);
+  el('help-send').addEventListener('click', function () { el('help-q').value = ''; });
+  document.addEventListener('keydown', function (e) {
+    if (el('help').classList.contains('hide')) { return; }
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (document.activeElement === el('help-q')) { el('help-send').focus(); } else { el('help-q').focus(); }
+    }
+  }, true);
+  document.addEventListener('focusin', function (e) {
+    if (!el('help').classList.contains('hide') && !el('help').contains(e.target)) { el('help-q').focus(); }
+  });
+
+  el('go-check').addEventListener('click', function () { go('check'); });
+  el('back-home').addEventListener('click', function () { go('home'); });
+  el('back-check').addEventListener('click', function () { go('check'); });
+  el('back-start').addEventListener('click', function () { go('home'); });
+
+  el('go-results').addEventListener('click', function () {
+    var ok = true;
+    var age = el('f-age'), zip = el('f-zip'), inc = el('f-income');
+    [age, zip, inc].forEach(function (f) { f.style.borderColor = ''; });
+    if (!/^\d{2,3}$/.test(age.value.trim())) { age.style.borderColor = '#e06666'; ok = false; }
+    if (!/^\d{5}$/.test(zip.value.trim())) { zip.style.borderColor = '#e06666'; ok = false; }
+    if (!/^\d+$/.test(inc.value.trim())) { inc.style.borderColor = '#e06666'; ok = false; }
+    if (!document.querySelector('input[name=hh]:checked')) { ok = false; }
+    if (ok) { go('results'); }
+  });
+
+  el('go-apply').addEventListener('click', function () { go('apply'); });
+
+  function startIdle() {
+    if (idleTimer) { return; }
+    idleTimer = setTimeout(function () {
+      idleTimer = null;
+      ['f-name', 'f-phone', 'f-time'].forEach(function (id) { el(id).value = ''; el(id).style.borderColor = ''; });
+      el('f-ok').checked = false;
+      go('home');
+      el('ended').classList.remove('hide');
+    }, 45000);
+  }
+  ['f-name', 'f-phone', 'f-time'].forEach(function (id) { el(id).addEventListener('input', startIdle); });
+
+  el('go-send').addEventListener('click', function () {
+    var ok = true;
+    var name = el('f-name'), phone = el('f-phone'), t = el('f-time');
+    [name, phone, t].forEach(function (f) { f.style.borderColor = ''; });
+    if (name.value.trim().length < 2) { name.style.borderColor = '#e06666'; ok = false; }
+    if (!/^\d{10}$/.test(phone.value.trim())) { phone.style.borderColor = '#e06666'; ok = false; }
+    if (t.value.trim().length < 1) { t.style.borderColor = '#e06666'; ok = false; }
+    if (!el('f-ok').checked) { ok = false; }
+    if (ok) { if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; } go('done'); }
+  });
+
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>

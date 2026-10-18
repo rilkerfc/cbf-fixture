@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Benefits Finder</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, "Times New Roman", serif; color: #1a1a1a; background: #ffffff; }
+  *:focus-visible { outline: 3px solid #b3261e; outline-offset: 2px; }
+  header { background: #1f4e8c; color: #ffffff; padding: 18px 24px; }
+  header .brand { font-size: 22px; font-weight: bold; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 28px; margin: 8px 0 12px; }
+  p { font-size: 17px; line-height: 1.5; }
+  .note { font-size: 16px; color: #333333; line-height: 1.5; }
+  .btn { display: inline-block; background: #1f4e8c; color: #ffffff; border: 0; border-radius: 6px; font-size: 18px; padding: 14px 22px; cursor: pointer; }
+  .row { margin: 14px 0; }
+  .row label.top { font-size: 16px; display: block; margin-bottom: 4px; }
+  .row input[type=text] { font-size: 17px; padding: 10px; width: 280px; border: 2px solid #595959; border-radius: 4px; }
+  .msg { color: #b3261e; font-size: 16px; margin-top: 4px; }
+  .opts label { font-size: 16px; margin-right: 18px; display: inline-flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; }
+  input[type=radio], input[type=checkbox] { width: 24px; height: 24px; margin: 0; }
+  fieldset { border: 0; padding: 0; margin: 14px 0; }
+  legend { font-size: 16px; margin-bottom: 6px; padding: 0; }
+  .card { border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+  .card h2 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 4px 0; }
+  .link { color: #1f4e8c; text-decoration: underline; cursor: pointer; font-size: 16px; background: none; border: 0; padding: 4px 0; font-family: inherit; }
+  .banner { background: #f4f6f8; border-left: 4px solid #1f4e8c; padding: 10px 14px; font-size: 16px; }
+  .hide { display: none; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  #help-open { position: fixed; right: 24px; bottom: 24px; }
+  #help { position: fixed; right: 24px; bottom: 24px; width: 320px; background: #ffffff; border: 1px solid #8c959f; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.25); padding: 16px; }
+  #help .close { position: absolute; top: 6px; right: 6px; width: 36px; height: 36px; font-size: 22px; background: none; border: 0; cursor: pointer; color: #333333; }
+  #help p { font-size: 15px; margin: 4px 0 10px; }
+  #help input { font-size: 15px; padding: 8px; width: 100%; border: 1px solid #8c959f; border-radius: 4px; }
+  #help .send { margin-top: 8px; font-size: 15px; padding: 8px 14px; background: #1f4e8c; color: #ffffff; border: 0; border-radius: 4px; }
+  footer { max-width: 760px; margin: 30px auto; padding: 0 24px 24px; }
+  .ref { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div id="gate" style="position:fixed;inset:0;background:#ffffff;z-index:10;display:flex;align-items:center;justify-content:center;">
+  <div style="max-width:420px;padding:24px;">
+    <h1 style="font-size:26px;">This preview is private</h1>
+    <p>Enter the password you were given to continue.</p>
+    <div class="row"><label class="top" for="g-pw">Password</label><input type="password" id="g-pw" style="font-size:17px;padding:10px;width:280px;border:2px solid #595959;border-radius:4px;"><div class="msg" id="m-gate" aria-live="polite"></div></div>
+    <p><button class="btn" type="button" id="g-go">Continue</button></p>
+  </div>
+</div>
+<header class="hide" data-g="1"><div class="brand">Community Benefits Finder</div></header>
+<main class="hide" data-g="1">
+  <section id="s-home">
+    <h1>Find help you may be able to get</h1>
+    <p>Answer a few questions and we will show programs in your area that can help with bills, prescriptions and property taxes.</p>
+    <p><button class="btn" type="button" id="go-check">Check what you can get</button></p>
+    <p class="note">Prefer to talk to someone? Call 1-800-555-0142, Monday to Friday, 9am to 5pm. Calls are free.</p>
+  </section>
+
+  <section id="s-check" class="hide">
+    <h1>About you</h1>
+    <p>We use this only to show programs. Nothing is saved.</p>
+    <div class="row"><label class="top" for="f-age">Your age</label><input type="text" id="f-age" inputmode="numeric" aria-describedby="m-age"><div class="msg" id="m-age" aria-live="polite"></div></div>
+    <div class="row"><label class="top" for="f-zip">ZIP code</label><input type="text" id="f-zip" inputmode="numeric" aria-describedby="m-zip"><div class="msg" id="m-zip" aria-live="polite"></div></div>
+    <div class="row"><label class="top" for="f-income">Monthly household income ($)</label><input type="text" id="f-income" aria-describedby="m-income"><div class="msg" id="m-income" aria-live="polite"></div></div>
+    <fieldset class="opts">
+      <legend>People in your household</legend>
+      <label><input type="radio" name="hh" value="1">1</label>
+      <label><input type="radio" name="hh" value="2">2</label>
+      <label><input type="radio" name="hh" value="3">3</label>
+      <label><input type="radio" name="hh" value="4">4 or more</label>
+      <div class="msg" id="m-hh" aria-live="polite"></div>
+    </fieldset>
+    <p><button class="btn" type="button" id="go-results">See my results</button></p>
+    <p><button class="link" type="button" id="back-home">Back</button></p>
+  </section>
+
+  <section id="s-results" class="hide">
+    <h1>Programs you may qualify for</h1>
+    <div class="card">
+      <h2>Utility Help</h2>
+      <p>Money toward heating and electric bills, paid straight to your utility company.</p>
+      <p class="note">Household income must be under $2,430 a month for one person or $3,280 a month for two people. Apply by December 15.</p>
+      <p><button class="btn" type="button" id="go-apply">Request a call back</button></p>
+    </div>
+    <div class="card">
+      <h2>Prescription Savings Card</h2>
+      <p>A free card that lowers the price of many medicines at most pharmacies.</p>
+    </div>
+    <div class="card">
+      <h2>Property Tax Relief</h2>
+      <p>A reduction on your property tax bill if you own and live in your home.</p>
+    </div>
+    <p><button class="link" type="button" id="back-check">Change my answers</button></p>
+  </section>
+
+  <section id="s-apply" class="hide">
+    <h1>Request a call back</h1>
+    <p>A benefits adviser will call you about Utility Help within two working days.</p>
+    <div class="row"><label class="top" for="f-name">Full name</label><input type="text" id="f-name" autocomplete="name" aria-describedby="m-name"><div class="msg" id="m-name" aria-live="polite"></div></div>
+    <div class="row"><label class="top" for="f-phone">Phone number</label><input type="text" id="f-phone" autocomplete="tel" aria-describedby="m-phone"><div class="msg" id="m-phone" aria-live="polite"></div></div>
+    <div class="row"><label class="top" for="f-time">Best time to call</label><input type="text" id="f-time" aria-describedby="m-time"><div class="msg" id="m-time" aria-live="polite"></div></div>
+    <div class="row opts"><label><input type="checkbox" id="f-ok">I agree to be contacted about this request</label><div class="msg" id="m-ok" aria-live="polite"></div></div>
+    <p><button class="btn" type="button" id="go-send">Send request</button></p>
+  </section>
+
+  <section id="s-done" class="hide">
+    <h1>Request received</h1>
+    <p>Thank you. An adviser will call you within two working days.</p>
+    <p>Your reference number is</p>
+    <p class="ref" id="ref"></p>
+    <p><button class="link" type="button" id="back-start">Return to the start</button></p>
+  </section>
+</main>
+
+<button class="btn hide" type="button" id="help-open" data-g="1">Need help?</button>
+<div id="help" class="hide" role="dialog" aria-labelledby="help-title">
+  <button type="button" class="close" id="help-x" aria-label="Close help">&times;</button>
+  <p id="help-title"><strong>Need help?</strong></p>
+  <p>Ask us anything about these programs.</p>
+  <label for="help-q" class="sr">Your question</label>
+  <input type="text" id="help-q" placeholder="Type your question">
+  <button type="button" class="send" id="help-send">Send</button>
+</div>
+
+<footer class="hide" data-g="1"><p class="note">Community Benefits Finder is a free information service. Program rules change; check with each program before you apply.</p></footer>
+
+<script>
+(function () {
+  var screens = ['home', 'check', 'results', 'apply', 'done'];
+  function el(id) { return document.getElementById(id); }
+  function show(name) {
+    screens.forEach(function (s) { el('s-' + s).classList.toggle('hide', s !== name); });
+    window.scrollTo(0, 0);
+    var h = el('s-' + name).querySelector('h1');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
+  }
+  function route() {
+    var h = (location.hash || '#/').replace('#/', '');
+    if (screens.indexOf(h) < 0) { h = 'home'; }
+    show(h);
+  }
+  function go(name) { location.hash = '#/' + (name === 'home' ? '' : name); }
+  function setMsg(id, text) { el('m-' + id).textContent = text; }
+
+  el('help-open').addEventListener('click', function () { el('help').classList.remove('hide'); el('help-open').classList.add('hide'); el('help-q').focus(); });
+  function closeHelp() { el('help').classList.add('hide'); el('help-open').classList.remove('hide'); el('help-open').focus(); }
+  el('help-x').addEventListener('click', closeHelp);
+  el('help-send').addEventListener('click', function () { el('help-q').value = ''; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !el('help').classList.contains('hide')) { closeHelp(); } });
+
+  el('go-check').addEventListener('click', function () { go('check'); });
+  el('back-home').addEventListener('click', function () { go('home'); });
+  el('back-check').addEventListener('click', function () { go('check'); });
+  el('back-start').addEventListener('click', function () { go('home'); });
+
+  el('go-results').addEventListener('click', function () {
+    var ok = true;
+    var age = el('f-age').value.trim();
+    var zip = el('f-zip').value.trim();
+    var inc = el('f-income').value.replace(/[$,\s]/g, '').replace(/\.\d{1,2}$/, '');
+    ['age', 'zip', 'income', 'hh'].forEach(function (k) { setMsg(k, ''); });
+    if (!/^\d{2,3}$/.test(age)) { setMsg('age', 'Enter your age in years, for example 68.'); ok = false; }
+    if (!/^\d{5}(-\d{4})?$/.test(zip)) { setMsg('zip', 'Enter a 5-digit ZIP code, for example 20001.'); ok = false; }
+    if (!/^\d+$/.test(inc)) { setMsg('income', 'Enter an amount in dollars, for example 1,850.'); ok = false; }
+    if (!document.querySelector('input[name=hh]:checked')) { setMsg('hh', 'Choose how many people live in your household.'); ok = false; }
+    if (ok) { go('results'); }
+  });
+
+  el('go-apply').addEventListener('click', function () { go('apply'); });
+
+  el('go-send').addEventListener('click', function () {
+    var ok = true;
+    var phone = el('f-phone').value.replace(/[\s().+-]/g, '').replace(/^1(\d{10})$/, '$1');
+    ['name', 'phone', 'time', 'ok'].forEach(function (k) { setMsg(k, ''); });
+    if (el('f-name').value.trim().length < 2) { setMsg('name', 'Enter your full name.'); ok = false; }
+    if (!/^\d{10}$/.test(phone)) { setMsg('phone', 'Enter a 10-digit phone number, for example 202-555-0186.'); ok = false; }
+    if (el('f-time').value.trim().length < 1) { setMsg('time', 'Tell us a good time to call, for example weekday mornings.'); ok = false; }
+    if (!el('f-ok').checked) { setMsg('ok', 'Tick the box so we can call you.'); ok = false; }
+    if (ok) { go('done'); }
+  });
+
+  window.addEventListener('hashchange', function () { if (!el('gate')) { route(); } });
+  function hx(s) { var h = 0x811c9dc5; var b = unescape(encodeURIComponent(s)); for (var i = 0; i < b.length; i++) { h ^= b.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
+  function unlock() {
+    var v = el('g-pw').value;
+    if (hx(v) !== 3220680147) { el('m-gate').textContent = 'That password is not right.'; return; }
+    var r = ('00000000' + hx(v + '|ref').toString(16).toUpperCase()).slice(-8);
+    el('ref').textContent = 'CBF-' + r.slice(0, 4) + '-' + r.slice(4);
+    el('g-pw').value = '';
+    el('gate').parentNode.removeChild(el('gate'));
+    Array.prototype.forEach.call(document.querySelectorAll('[data-g]'), function (n) { n.classList.remove('hide'); n.removeAttribute('data-g'); });
+    route();
+  }
+  el('g-go').addEventListener('click', unlock);
+  el('g-pw').addEventListener('keydown', function (e) { if (e.key === 'Enter') { unlock(); } });
+})();
+</script>
+</body>
+</html>
