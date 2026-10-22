@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Account settings (test fixture)</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 32rem; margin: 2rem auto; padding: 0 1rem; color: #222; }
+  .row { display: flex; align-items: center; gap: .5rem; position: relative; margin: 1rem 0; }
+  .box { width: 1.25rem; height: 1.25rem; border: 2px solid #0a5; background: #0a5; color: #fff; text-align: center; line-height: 1.25rem; border-radius: 4px; }
+  .track { width: 44px; height: 24px; border-radius: 12px; background: #0a5; position: relative; }
+  .knob { position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; }
+  footer { margin-top: 2rem; font-size: .85rem; color: #555; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Account settings</h1>
+  <p>Choose how this account behaves on this device, then save your changes.</p>
+  <label class="row"><span style="opacity:0;position:absolute"><input type="checkbox" id="remember" checked aria-label="Remember me"></span><span class="box" aria-hidden="true">✓</span> Remember me</label>
+  <div class="row">
+    <div role="switch" aria-checked="true" aria-label="Dark mode" tabindex="0" style="opacity:0;position:absolute;width:44px;height:24px"></div>
+    <span class="track" aria-hidden="true"><span class="knob"></span></span>
+    <span>Dark mode</span>
+  </div>
+  <button type="button" id="declined" style="opacity:0">Your card was declined</button>
+  <p><button type="button">Save settings</button></p>
+</main>
+<footer>Test fixture for TwoCents perception. No real data.</footer>
+<script>
+  var sw = document.querySelector('[role=switch]');
+  sw.addEventListener('click', function () {
+    sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+  });
+</script>
+</body>
+</html>
