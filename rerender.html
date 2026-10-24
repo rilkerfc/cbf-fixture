@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<!--
+  Test fixture for twocents#240 (aarpinnovationstudio/twocents): a control the page re-renders must be
+  recorded, not falsely refused. This page exists to prove that in production.
+
+  Whenever any attribute on the "Save" button changes, the page replaces the button with a FRESH node built
+  from its own state (same id, same text), not a clone, so an attribute added by anyone else is not carried
+  over. A recorder that marks the element it is about to describe (writes an attribute to it) makes the page
+  throw the element away and then reports it gone. A recorder that identifies the element by handle and
+  writes nothing to the page leaves it alone, so the step is recorded and the click lands.
+
+  Static, no dependencies, no real data. Not part of the CBF-1 measurement.
+-->
+<title>Profile (test fixture)</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 32rem; margin: 2rem auto; padding: 0 1rem; color: #222; }
+  button { padding: .5rem 1rem; font: inherit; }
+  #status { margin-top: 1rem; font-weight: 600; }
+  footer { margin-top: 2rem; font-size: .85rem; color: #555; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Your profile</h1>
+  <p>Review your details, then save them.</p>
+  <p id="slot"></p>
+  <p id="status" role="status"></p>
+</main>
+<footer>Test fixture for TwoCents (twocents#240). No real data.</footer>
+<script>
+  var state = { label: 'Save', saves: 0 };
+  var slot = document.getElementById('slot');
+  var statusEl = document.getElementById('status');
+  var observer = new MutationObserver(function () { render(); });
+
+  function render() {
+    observer.disconnect();
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'save';
+    button.textContent = state.label;
+    button.addEventListener('click', function () {
+      state.saves += 1;
+      statusEl.textContent = 'Saved ' + state.saves + ' time' + (state.saves === 1 ? '' : 's');
+    });
+    slot.replaceChildren(button);
+    observer.observe(button, { attributes: true });
+  }
+  render();
+</script>
+</body>
+</html>
