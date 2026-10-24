@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<!--
+  Test fixture for twocents#243 (aarpinnovationstudio/twocents): a persona run must not act on a control
+  that moved after the persona chose it. This page exists to prove, in production, a REFUSED step: about
+  three seconds after load, which is the window while a persona's decision is in flight, it inserts a
+  visible "Accept cookies" button ABOVE every control on the page, so each control's position shifts by one.
+  A run that acts on the position it was shown would press "Accept cookies" instead of the control it chose.
+  Static, no dependencies, no real data. Not part of the CBF-1 measurement.
+-->
+<title>Join the newsletter (test fixture)</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 32rem; margin: 2rem auto; padding: 0 1rem; color: #222; }
+  label { display: block; margin: 1rem 0 .25rem; }
+  input { width: 100%; box-sizing: border-box; padding: .5rem; font: inherit; }
+  button { margin: 1rem 0; padding: .5rem 1rem; font: inherit; }
+  #cookies { display: block; background: #fff3cd; border: 1px solid #c9a227; }
+  footer { margin-top: 2rem; font-size: .85rem; color: #555; }
+</style>
+</head>
+<body>
+<main id="top">
+  <h1>Join the newsletter</h1>
+  <p>Tell us where to send it, then continue.</p>
+  <form action="#" onsubmit="event.preventDefault(); document.getElementById('done').hidden = false;">
+    <label for="email">Email address</label>
+    <input id="email" type="email" autocomplete="off">
+    <button type="submit">Continue</button>
+  </form>
+  <p id="done" hidden>Thanks, you are on the list.</p>
+</main>
+<footer>Test fixture for TwoCents (twocents#243). No real data.</footer>
+<script>
+  setTimeout(function () {
+    var banner = document.createElement('button');
+    banner.type = 'button';
+    banner.id = 'cookies';
+    banner.textContent = 'Accept cookies';
+    banner.addEventListener('click', function () { banner.hidden = true; });
+    document.body.insertBefore(banner, document.body.firstChild);
+  }, 3000);
+</script>
+</body>
+</html>
