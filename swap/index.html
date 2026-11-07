@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choose a plan</title>
+<style>
+  body { font-family: sans-serif; max-width: 34rem; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #fff; line-height: 1.5; }
+  .fixture { font-size: 0.9rem; border: 1px solid #555; padding: 0.5rem 0.75rem; background: #f2f2f2; }
+  #controls { margin: 1.5rem 0; min-height: 11rem; }
+  button { font: inherit; padding: 0.6rem 1rem; margin: 0 0.5rem 0.5rem 0; border: 2px solid #333; background: #fff; color: #1a1a1a; border-radius: 4px; cursor: pointer; }
+  button[aria-pressed="true"] { background: #1a1a1a; color: #fff; }
+  #go { display: block; margin-top: 1rem; background: #0b5cad; border-color: #0b5cad; color: #fff; }
+  #done { min-height: 2rem; font-weight: bold; }
+</style>
+</head>
+<body>
+<p class="fixture">This is a TwoCents test fixture. Its controls are replaced by new copies every second on purpose. The plans and prices are made up.</p>
+<h1>Choose a plan</h1>
+<p>Pick a plan below, then press Continue.</p>
+<div id="controls"></div>
+<p id="done" role="status" aria-live="polite"></p>
+<script>
+  // All state lives here, so a freshly built control looks exactly like the one it replaced.
+  var plans = ['Basic: $5 a month', 'Plus: $9 a month', 'Family: $14 a month'];
+  var chosen = 0;
+  var finished = false;
+
+  function build() {
+    var box = document.createElement('div');
+    plans.forEach(function (label, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.setAttribute('aria-pressed', String(i === chosen));
+      b.addEventListener('click', function () { chosen = i; refresh(); });
+      box.appendChild(b);
+    });
+    var go = document.createElement('button');
+    go.type = 'button';
+    go.id = 'go';
+    go.textContent = 'Continue';
+    go.addEventListener('click', function () {
+      finished = true;
+      document.getElementById('done').textContent = 'Done. You chose the ' + plans[chosen].split(':')[0] + ' plan.';
+      refresh();
+    });
+    box.appendChild(go);
+    return box;
+  }
+
+  function refresh() {
+    var holder = document.getElementById('controls');
+    holder.replaceChildren(build());
+  }
+
+  refresh();
+  // Every second every control becomes a new element with the same look and text. A person sees nothing;
+  // a program holding the old element finds it detached. The model takes longer than a second to decide.
+  setInterval(refresh, 1000);
+</script>
+</body>
+</html>
