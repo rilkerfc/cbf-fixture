@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<p class="fixture">This is a TwoCents test fixture. Its controls are replaced by new copies every second on purpose. The plans and prices are made up.</p>
+<p class="fixture">This is a TwoCents test fixture. The plans and prices are made up.</p>
 <h1>Choose a plan</h1>
 <p>Pick a plan below, then press Continue.</p>
 <div id="controls"></div>
@@ -57,7 +57,9 @@
   refresh();
   // Every second every control becomes a new element with the same look and text. A person sees nothing;
   // a program holding the old element finds it detached. The model takes longer than a second to decide.
-  setInterval(refresh, 1000);
+  // After 45 seconds it stops, so a persona that gets past the swaps can finish.
+  var timer = setInterval(refresh, 1000);
+  setTimeout(function () { clearInterval(timer); }, 45000);
 </script>
 </body>
 </html>
