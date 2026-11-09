@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community centre class sign-up (TwoCents test fixture)</title>
+<style>
+  body { font-family: sans-serif; max-width: 52rem; margin: 1rem auto; padding: 0 1rem; line-height: 1.4; color: #111; background: #fff; }
+  nav a { margin-right: 1rem; }
+  fieldset { margin: 1rem 0; }
+  .classes button { margin: .25rem; padding: .4rem .7rem; font-size: 1rem; }
+  .classes button[aria-pressed="true"] { background: #1a4f8b; color: #fff; }
+  label { margin-right: 1rem; display: inline-block; }
+  #result { font-weight: bold; margin-top: 1rem; min-height: 1.5rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>TwoCents test fixture: many controls</h1>
+  <p>This page is a test fixture for TwoCents (issue aarpinnovationstudio/twocents#438). It makes no external requests and holds no real data.</p>
+  <p><strong>Goal:</strong> pick one class at the community centre, then press "Sign up".</p>
+  <nav aria-label="Sections on this page">
+    <a href="#classes">Classes</a>
+    <a href="#filters">Filters</a>
+    <a href="#details">Your details</a>
+    <a href="#signup">Sign up</a>
+  </nav>
+</header>
+<main>
+  <section id="classes">
+    <h2>Classes</h2>
+    <div class="classes" role="group" aria-label="Classes">
+      <button type="button">Yoga</button>
+      <button type="button">Pottery</button>
+      <button type="button">Watercolour</button>
+      <button type="button">Chess</button>
+      <button type="button">Choir</button>
+      <button type="button">Tai chi</button>
+      <button type="button">Knitting</button>
+      <button type="button">Spanish</button>
+      <button type="button">Gardening</button>
+      <button type="button">Photography</button>
+      <button type="button">Line dancing</button>
+      <button type="button">Bridge</button>
+      <button type="button">Woodwork</button>
+      <button type="button">Creative writing</button>
+      <button type="button">Cooking</button>
+      <button type="button">Ukulele</button>
+      <button type="button">Walking club</button>
+      <button type="button">Computer basics</button>
+      <button type="button">Bookbinding</button>
+      <button type="button">Stretch and balance</button>
+    </div>
+  </section>
+
+  <section id="filters">
+    <h2>Filters</h2>
+    <fieldset>
+      <legend>Show classes that are</legend>
+      <label><input type="checkbox"> Mornings</label>
+      <label><input type="checkbox"> Afternoons</label>
+      <label><input type="checkbox"> Evenings</label>
+      <label><input type="checkbox"> Weekends</label>
+      <label><input type="checkbox"> Free</label>
+      <label><input type="checkbox"> Beginner friendly</label>
+      <label><input type="checkbox"> Step-free access</label>
+      <label><input type="checkbox"> Seated</label>
+    </fieldset>
+  </section>
+
+  <section id="details">
+    <h2>Your details</h2>
+    <p><label for="name">Your first name <input id="name" type="text" autocomplete="off"></label></p>
+    <p><label for="time">Preferred time
+      <select id="time">
+        <option>Morning</option>
+        <option>Afternoon</option>
+        <option>Evening</option>
+      </select></label></p>
+  </section>
+
+  <section id="signup">
+    <h2>Sign up</h2>
+    <p>Chosen class: <span id="chosen">none yet</span></p>
+    <button type="button" id="go">Sign up</button>
+    <div id="result" role="status" aria-live="polite"></div>
+  </section>
+</main>
+<script>
+  var chosen = null;
+  var buttons = document.querySelectorAll('.classes button');
+  buttons.forEach(function (b) {
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () {
+      buttons.forEach(function (o) { o.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      chosen = b.textContent;
+      document.getElementById('chosen').textContent = chosen;
+    });
+  });
+  document.getElementById('go').addEventListener('click', function () {
+    var r = document.getElementById('result');
+    r.textContent = chosen ? "You're signed up for " + chosen : 'Please pick a class first.';
+  });
+</script>
+</body>
+</html>
