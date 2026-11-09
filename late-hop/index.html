@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Benefits Finder: programs near you</title>
+<!--
+  TwoCents test fixture for aarpinnovationstudio/twocents#543 (the recorder keeps every navigation inside the
+  attested origin). Three buttons, each a different kind of navigation after a click:
+    1. "See programs near you"      : a LATE hop. 1000 ms after the click the page sends itself to another origin
+                                      (example.com). That lands after the recorder's settle check, so the recorder
+                                      must drop it, end the session with the ruled sentence, and store nothing of it.
+    2. "Read the eligibility guide" : an EARLY hop. The page sends itself to another origin at once (example.org).
+                                      The recorder must refuse the step and carry on.
+    3. "Open the questions page"    : the control. 1000 ms after the click the page moves to another page on this
+                                      same site. The recorder must follow it as an ordinary step.
+  The off-site addresses carry a path and a query (a canary) that must never appear in anything TwoCents stores or
+  shows: the ruled sentence names the origin only.
+  No script loads from anywhere else; nothing is sent anywhere until a button is pressed.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, "Times New Roman", serif; color: #1a1a1a; background: #ffffff; }
+  *:focus-visible { outline: 3px solid #b3261e; outline-offset: 2px; }
+  header { background: #1f4e8c; color: #ffffff; padding: 18px 24px; }
+  header .brand { font-size: 22px; font-weight: bold; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 28px; margin: 8px 0 12px; }
+  p { font-size: 17px; line-height: 1.5; }
+  .note { font-size: 16px; color: #333333; line-height: 1.5; }
+  .btn { display: inline-block; background: #1f4e8c; color: #ffffff; border: 0; border-radius: 6px; font-size: 18px; padding: 14px 22px; cursor: pointer; margin: 6px 0; }
+  .card { border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
+  .card h2 { margin: 0 0 6px; font-size: 19px; }
+  .status { font-size: 16px; color: #333333; min-height: 24px; }
+</style>
+</head>
+<body>
+<header><div class="brand">Community Benefits Finder</div></header>
+<main>
+  <h1>Programs near you</h1>
+  <p>Pick one of the options below.</p>
+
+  <div class="card">
+    <h2>Programs in your area</h2>
+    <p>See the programs we found for your ZIP code.</p>
+    <button class="btn" type="button" id="late">See programs near you</button>
+  </div>
+
+  <div class="card">
+    <h2>Who can get help</h2>
+    <p>Read the full eligibility guide before you apply.</p>
+    <button class="btn" type="button" id="early">Read the eligibility guide</button>
+  </div>
+
+  <div class="card">
+    <h2>Common questions</h2>
+    <p>Answers to the questions people ask most.</p>
+    <button class="btn" type="button" id="same">Open the questions page</button>
+  </div>
+
+  <p class="status" id="status" aria-live="polite"></p>
+  <p class="note">Prefer to talk to someone? Call 1-800-555-0142, Monday to Friday, 9am to 5pm.</p>
+</main>
+<script>
+  // Fixture constants: the delays and addresses the TwoCents live check (twocents#543) relies on.
+  var LATE_MS = 1000;
+  var LATE_TARGET = 'https://example.com/cbf543-late/programs?canary=CBF543-LATE-CANARY';
+  var EARLY_TARGET = 'https://example.org/cbf543-early/guide?canary=CBF543-EARLY-CANARY';
+  var SAME_TARGET = 'questions.html';
+  var status = document.getElementById('status');
+  document.getElementById('late').addEventListener('click', function () {
+    status.textContent = 'Loading programs...';
+    setTimeout(function () { location.href = LATE_TARGET; }, LATE_MS);
+  });
+  document.getElementById('early').addEventListener('click', function () {
+    location.href = EARLY_TARGET;
+  });
+  document.getElementById('same').addEventListener('click', function () {
+    status.textContent = 'Opening the questions page...';
+    setTimeout(function () { location.href = SAME_TARGET; }, LATE_MS);
+  });
+</script>
+</body>
+</html>
